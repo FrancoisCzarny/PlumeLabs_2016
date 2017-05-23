@@ -1,3 +1,5 @@
+library(glmnet)
+
 Xtrain <- read.table("Xtrain.csv", sep = ",", header = T)
 Ytrain = read.table("Ytrain.csv",sep=";",header=TRUE)
 Xtest <- read.table("Xtest.csv", sep = ",",header=TRUE)
@@ -32,7 +34,6 @@ meanPM2 = mean(PM2)
 diff = meanPM2_h - meanPM2
 
 # Lasso
-library(glmnet)
 lasso_PM2 = cv.glmnet(as.matrix(Xtrain[,-1]),PM2, family = "gaussian", alpha = 1)
 plot(lasso_PM2)
 c_PM2<-coef(lasso_PM2,s=exp(-1.9),exact=TRUE)
@@ -94,7 +95,6 @@ meanPM10 = mean(PM10)
 diff_PM10 = meanPM10_h - meanPM10
 
 # Lasso
-library(glmnet)
 lasso_PM10 = cv.glmnet(as.matrix(Xtrain[,-1]),PM10, family = "gaussian", alpha = 1)
 c_PM10<-coef(lasso_PM10,s=exp(-2.8),exact=TRUE)
 ind_PM10<-which(c_PM10!=0)
@@ -142,7 +142,6 @@ O3 = rowMeans(Ytrain[,49:72])
 meanO3 = mean(O3)
 diff_O3 = meanO3_h - meanO3
 
-library(glmnet)
 lasso_O3 = cv.glmnet(as.matrix(Xtrain[,-1]),O3, family = "gaussian", alpha = 1)
 plot(lasso_O3)
 c_O3<-coef(lasso_O3,s=exp(0.6),exact=TRUE)
@@ -188,7 +187,6 @@ NO2 = rowMeans(log(Ytrain[,73:96]))
 meanNO2 = mean(NO2)
 diff_NO2 = meanPM10_h - meanPM10
 
-library(glmnet)
 lasso_NO2 = cv.glmnet(as.matrix(Xtrain[,-1]),NO2, family = "gaussian", alpha = 1)
 plot(lasso_NO2)
 c_NO2<-coef(lasso_NO2,s=exp(-2.8),exact=TRUE)
